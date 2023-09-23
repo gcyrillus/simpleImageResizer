@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+	<title><![CDATA[simpleImageResizer]]></title>
+	<author><![CDATA[forum PluXml]]></author>
+	<version>0.1</version>
+	<date>22/09/2023</date>
+	<site>https://forum.pluxml.org</site>
+	<description><![CDATA[Remplace et simplifie l'interface d'upload des médias en configurant une largeur maximale aux images. Ne genere pas de miniature]]></description>
+	<scope>admin</scope>
+</document>
