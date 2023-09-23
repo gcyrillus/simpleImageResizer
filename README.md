@@ -1,6 +1,8 @@
 # simpleImageResizer
 simplifie l'interface d'upload de PluXml et fixe une largeur maximale aux images. Celle-ci sont redimensionnées. Pas de miniature
 
+Sur une idée de Txori : voir le fil de la discussion sur https://forum.pluxml.org/discussion/7526/nouvelle-option-de-redimensionnement-dimage
+
 <h2>Aide</h2>
 <p>Fichier d'aide du plugin imageSimpleResizer</p>
 <p>&nbsp;</p>
