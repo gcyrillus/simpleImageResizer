@@ -33,6 +33,17 @@
 			# droits pour accèder à la page config.php du plugin
 			$this->setConfigProfil(PROFIL_ADMIN);
 			
+			# Recherche du type de medias à afficher via la session
+			global $plxAdmin;
+			if(empty($_SESSION['medias'])) {
+				$_SESSION['medias'] = $plxAdmin->aConf['medias'];
+				$_SESSION['folder'] = '';
+			}
+			elseif(!empty($_POST['folder'])) {
+				$_SESSION['currentfolder']= (isset($_SESSION['folder'])?$_SESSION['folder']:'');
+				$_SESSION['folder'] = ($_POST['folder']=='.'?'':$_POST['folder']);
+			}	
+			
 			# Initialisation Reprises du fonctionnement des variables utilisé par PluXml à l'attention des deux fonctions de remplacements
 			$this->path =PLX_ROOT.$_SESSION['medias'];
 			$this->dir = $_SESSION['folder'];
