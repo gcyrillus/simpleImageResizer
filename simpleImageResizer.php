@@ -4,17 +4,17 @@
 	class simpleImageResizer extends plxPlugin
 	{
 		# initialisation des variables - reflets des variables natives pour les fonctions copiées/réecrites
-		public $path = null; 			# chemin vers les médias
-		public $dir = null;	 			# chemin vers le dossier medias affiché
-		public $aDirs = array(); 		# liste des dossiers et sous dossiers
-		public $aFiles = array(); 		# liste des fichiers d'un dossier
-		public $maxUpload = array();	# valeur upload_max_filesize
-		public $maxPost = array(); 		# valeur post_max_size	
-		public $img_supported = array('.png', '.gif', '.jpg', '.jpeg', '.bmp', '.webp'); # images formats supported
-		public $img_exts = '/\.(jpe?g|png|gif|bmp|webp)$/i';
-		public $doc_exts = '/\.(7z|aiff|asf|avi|csv|docx?|epub|fla|flv|gpx|gz|gzip|m4a|m4v|mid|mov|mp3|mp4|mpc|mpe?g|ods|odt|odp|ogg|pdf|pptx?|ppt|pxd|qt|ram|rar|rm|rmi|rmvb|rtf|svg|swf|sxc|sxw|tar|tgz|txt|vtt|wav|webm|wma|wmv|xcf|xlsx?|zip)$/i';	
-		const BEGIN_CODE = '<?php # ' . __CLASS__ . ' plugin' . PHP_EOL;
-		const END_CODE = PHP_EOL . '?>';		
+		public $path 			= PLX_ROOT.'data/medias'; 					# chemin vers les médias
+		public $dir 			= "";	 							# chemin vers le dossier medias affiché
+		public $aDirs 			= array(); 							# liste des dossiers et sous dossiers
+		public $aFiles 			= array(); 							# liste des fichiers d'un dossier
+		public $maxUpload 		= array();							# valeur upload_max_filesize
+		public $maxPost 		= array(); 							# valeur post_max_size	
+		public $img_supported 		= array('.png', '.gif', '.jpg', '.jpeg', '.bmp', '.webp'); 	# images formats supported
+		public $img_exts 		= '/\.(jpe?g|png|gif|bmp|webp)$/i';
+		public $doc_exts 		= '/\.(7z|aiff|asf|avi|csv|docx?|epub|fla|flv|gpx|gz|gzip|m4a|m4v|mid|mov|mp3|mp4|mpc|mpe?g|ods|odt|odp|ogg|pdf|pptx?|ppt|pxd|qt|ram|rar|rm|rmi|rmvb|rtf|svg|swf|sxc|sxw|tar|tgz|txt|vtt|wav|webm|wma|wmv|xcf|xlsx?|zip)$/i';	
+		const BEGIN_CODE 		= '<?php # ' . __CLASS__ . ' plugin' . PHP_EOL;
+		const END_CODE 			= PHP_EOL . '?>';		
 		
 		public function __construct($default_lang) {
 			# appel du constructeur de la classe plxPlugin (obligatoire)
@@ -32,21 +32,19 @@
 			
 			# droits pour accèder à la page config.php du plugin
 			$this->setConfigProfil(PROFIL_ADMIN);
-			
+	
 			# Recherche du type de medias à afficher via la session
 			global $plxAdmin;
-			if(empty($_SESSION['medias'])) {
-				$_SESSION['medias'] = $plxAdmin->aConf['medias'];
-				$_SESSION['folder'] = '';
+			if(isset($_SESSION['medias']) and empty($_SESSION['medias'])) {
+				$_SESSION['medias'] = $plxAdmin->aConf['medias'] == null ? PLX_ROOT .'data/medias/' : $plxAdmin->aConf['medias'];
+				$_SESSION['folder'] = '';			
+				$this->path =PLX_ROOT.$_SESSION['medias'];
 			}
 			elseif(!empty($_POST['folder'])) {
 				$_SESSION['currentfolder']= (isset($_SESSION['folder'])?$_SESSION['folder']:'');
 				$_SESSION['folder'] = ($_POST['folder']=='.'?'':$_POST['folder']);
-			}	
-			
-			# Initialisation Reprises du fonctionnement des variables utilisé par PluXml à l'attention des deux fonctions de remplacements
-			$this->path =PLX_ROOT.$_SESSION['medias'];
-			$this->dir = $_SESSION['folder'];
+				$this->dir = $_SESSION['folder'];
+			}
 			
 			# Taille maxi des fichiers
 			$maxUpload = strtoupper(ini_get("upload_max_filesize"));
